@@ -62,15 +62,24 @@ function dump5DayForecastData() {
   }).then(function (response) {
     currentWeatherView.text(JSON.stringify(response, null, 2));
 
+    var offsetSeconds = response.city.timezone;
+    var fiveDayForecastData = [];
+
     response.list.forEach(function (forecastListItem) {
-      var forecastData = {
-        unixTime: forecastListItem.dt,
-        temperature: forecastListItem.main.temp,
-        humidityPercent: forecastListItem.main.humidity,
-        iconUrl: getWeatherIconUrlFromId(forecastListItem.weather[0].icon),
-      };
-      console.log(forecastData);
+      var seconds = forecastListItem.dt + offsetSeconds;
+      var hours = seconds / 3600;
+      var hour = hours % 24;
+      if (hour > 12 && hour <= 15) {
+        var forecastData = {
+          unixTime: forecastListItem.dt,
+          temperature: forecastListItem.main.temp,
+          humidityPercent: forecastListItem.main.humidity,
+          iconUrl: getWeatherIconUrlFromId(forecastListItem.weather[0].icon),
+        };
+        fiveDayForecastData.push(forecastData);
+      }
     });
+    console.log(fiveDayForecastData);
   });
 }
 

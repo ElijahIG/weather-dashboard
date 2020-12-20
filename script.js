@@ -14,7 +14,7 @@ function dumpCurrentWeather() {
     var currentWeatherData = {
       cityName: response.name,
       unixTime: response.dt,
-      iconTd: response.weather[0].icon,
+      iconUrl: getWeatherIconUrlFromId(response.weather[0].icon),
       humidityPercent: response.main.humidity,
       windSpeedMetersSec: response.wind.speed,
       location: response.coord,
@@ -59,15 +59,19 @@ function dump5DayForecastData() {
 
     var forecastHoursList = response.list[0];
     var forecastData = {
-      unixTime: response.list[0].dt,
-      iconId: response.list[0].weather[0].icon,
+      unixTime: forecastHoursList.dt,
       temperature: forecastHoursList.main.temp,
       humidityPercent: forecastHoursList.main.humidity,
+      iconUrl: getWeatherIconUrlFromId(forecastHoursList.weather[0].icon),
     };
     console.log(forecastData);
   });
 }
 
+function getWeatherIconUrlFromId(iconId) {
+  return "http://openweathermap.org/img/wn/" + iconId + "@2x.png";
+}
+
 // dumpUVdata();
-// dumpCurrentWeather();
-dump5DayForecastData();
+dumpCurrentWeather();
+//dump5DayForecastData();

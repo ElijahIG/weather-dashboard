@@ -50,7 +50,7 @@ function dumpUVdata() {
 
 function dump5DayForecastData() {
   var queryURL =
-    "http://api.openweathermap.org/data/2.5/forecast?" +
+    "https://api.openweathermap.org/data/2.5/forecast?" +
     "q=" +
     citySearch +
     "&" +

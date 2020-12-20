@@ -1,10 +1,14 @@
 var currentWeatherView = $("#current-weather-view");
 var citySearch = "La Mesa";
 var apiKeyParam = "appid=b825dee8ade9ae135176720980ccb6bf";
+var unitsFormat = "units=imperial";
 
 function dumpCurrentWeather() {
   var queryURL =
-    "https://api.openweathermap.org/data/2.5/weather?q=La Mesa&" + apiKeyParam;
+    "https://api.openweathermap.org/data/2.5/weather?q=La Mesa&" +
+    unitsFormat +
+    "&" +
+    apiKeyParam;
 
   $.ajax({
     url: queryURL,
@@ -15,6 +19,7 @@ function dumpCurrentWeather() {
       cityName: response.name,
       unixTime: response.dt,
       iconUrl: getWeatherIconUrlFromId(response.weather[0].icon),
+      temperature: response.main.temp,
       humidityPercent: response.main.humidity,
       windSpeedMetersSec: response.wind.speed,
       location: response.coord,
@@ -57,14 +62,15 @@ function dump5DayForecastData() {
   }).then(function (response) {
     currentWeatherView.text(JSON.stringify(response, null, 2));
 
-    var forecastHoursList = response.list[0];
-    var forecastData = {
-      unixTime: forecastHoursList.dt,
-      temperature: forecastHoursList.main.temp,
-      humidityPercent: forecastHoursList.main.humidity,
-      iconUrl: getWeatherIconUrlFromId(forecastHoursList.weather[0].icon),
-    };
-    console.log(forecastData);
+    response.list.forEach(function (forecastListItem) {
+      var forecastData = {
+        unixTime: forecastListItem.dt,
+        temperature: forecastListItem.main.temp,
+        humidityPercent: forecastListItem.main.humidity,
+        iconUrl: getWeatherIconUrlFromId(forecastListItem.weather[0].icon),
+      };
+      console.log(forecastData);
+    });
   });
 }
 
@@ -73,5 +79,5 @@ function getWeatherIconUrlFromId(iconId) {
 }
 
 // dumpUVdata();
-dumpCurrentWeather();
-//dump5DayForecastData();
+//dumpCurrentWeather();
+dump5DayForecastData();

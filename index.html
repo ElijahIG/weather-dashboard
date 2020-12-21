@@ -11,6 +11,16 @@
       integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
       crossorigin="anonymous"
     />
+
+    <style>
+      .weather-icon {
+        height: 4rem;
+      }
+
+      .forecast .weather-icon {
+        height: 3.5rem;
+      }
+    </style>
   </head>
   <body>
     <header class="navbar navbar-dark bg-dark">
@@ -37,7 +47,7 @@
       <div class="list-group">
         <button
           type="button"
-          class="list-group-item list-group-item-action active"
+          class="list-group-item list-group-item-action"
           aria-current="true"
         >
           La Mesa
@@ -62,7 +72,10 @@
         <div class="card-body">
           <h2 class="card-title h3">
             La Mesa 12/20/2020
-            <img src="http://openweathermap.org/img/wn/01n@2x.png" />
+            <img
+              class="weather-icon"
+              src="http://openweathermap.org/img/wn/01n@2x.png"
+            />
           </h2>
           <p class="card-text">Temperature: 65&#176;</p>
           <p class="card-text">Humidity: 23%</p>
@@ -70,6 +83,92 @@
           <p class="card-text">
             UV Index: <span class="badge bg-info">3.0</span>
           </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="container mt-3">
+      <h2 class="h4">5-Day Forecast:</h2>
+      <div class="card deck">
+        <div class="card text-white bg-primary forecast">
+          <div class="card-body">
+            <h5 class="card-title">12/21/2020</h5>
+            <div>
+              <img
+                class="weather-icon"
+                src="http://openweathermap.org/img/wn/01n@2x.png"
+              />
+            </div>
+            <p class="card-text">
+              Temperature: 65&#176;
+              <br />
+              Humidity: 23%
+            </p>
+          </div>
+        </div>
+        <div class="card text-white bg-primary forecast">
+          <div class="card-body">
+            <h5 class="card-title">12/21/2020</h5>
+            <div>
+              <img
+                class="weather-icon"
+                src="http://openweathermap.org/img/wn/01n@2x.png"
+              />
+            </div>
+            <p class="card-text">
+              Temperature: 65&#176;
+              <br />
+              Humidity: 23%
+            </p>
+          </div>
+        </div>
+        <div class="card text-white bg-primary forecast">
+          <div class="card-body">
+            <h5 class="card-title">12/21/2020</h5>
+            <div>
+              <img
+                class="weather-icon"
+                src="http://openweathermap.org/img/wn/01n@2x.png"
+              />
+            </div>
+            <p class="card-text">
+              Temperature: 65&#176;
+              <br />
+              Humidity: 23%
+            </p>
+          </div>
+        </div>
+        <div class="card text-white bg-primary forecast">
+          <div class="card-body">
+            <h5 class="card-title">12/21/2020</h5>
+            <div>
+              <img
+                class="weather-icon"
+                src="http://openweathermap.org/img/wn/01n@2x.png"
+              />
+            </div>
+            <p class="card-text">
+              Temperature: 65&#176;
+              <br />
+              Humidity: 23%
+            </p>
+          </div>
+        </div>
+        <div class="card text-white bg-primary forecast">
+          <div class="card-body">
+            <h5 class="card-title">12/21/2020</h5>
+            <div>
+              <img
+                class="weather-icon"
+                src="http://openweathermap.org/img/wn/01n@2x.png"
+              />
+            </div>
+            <p class="card-text">
+              Temperature: 65&#176;
+              <br />
+              Humidity: 23%
+            </p>
+          </div>
         </div>
       </div>
     </section>

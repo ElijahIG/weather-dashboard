@@ -88,5 +88,5 @@ function getWeatherIconUrlFromId(iconId) {
 }
 
 // dumpUVdata();
-dumpCurrentWeather();
+//dumpCurrentWeather();
 //dump5DayForecastData();

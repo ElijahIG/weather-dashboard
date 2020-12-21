@@ -20,6 +20,10 @@
       .forecast .weather-icon {
         height: 3.5rem;
       }
+
+      .forecast {
+        height: 12rem;
+      }
     </style>
   </head>
   <body>
@@ -28,150 +32,180 @@
         <h1 class="navbar-brand mb-0 text-center w-100">Weather Dashboard</h1>
       </div>
     </header>
-    <section class="container mt-2">
-      <form>
-        <div class="mb-3">
-          <label for="city-input">Search for City:</label>
-        </div>
-        <div class="input-group mb-3">
-          <input
-            id="city-input"
-            type="text"
-            class="form-control"
-            placeholder="Atlanta"
-          />
-          <button class="btn btn-primary" type="submit">Search</button>
-        </div>
-      </form>
 
-      <div class="list-group">
-        <button
-          type="button"
-          class="list-group-item list-group-item-action"
-          aria-current="true"
-        >
-          La Mesa
-        </button>
-        <button type="button" class="list-group-item list-group-item-action">
-          South Lake Tahoe
-        </button>
-        <button type="button" class="list-group-item list-group-item-action">
-          Bishop
-        </button>
-        <button type="button" class="list-group-item list-group-item-action">
-          Las Vegas
-        </button>
-        <button type="button" class="list-group-item list-group-item-action">
-          Cedar City
-        </button>
-      </div>
-    </section>
+    <div class="container">
+      <div class="row">
+        <div class="col-md col-xl-3">
+          <section class="mt-2">
+            <form>
+              <div class="mb-3">
+                <label for="city-input">Search for City:</label>
+              </div>
+              <div class="input-group mb-3">
+                <input
+                  id="city-input"
+                  type="text"
+                  class="form-control"
+                  placeholder="Atlanta"
+                />
+                <button class="btn btn-primary" type="submit">Search</button>
+              </div>
+            </form>
 
-    <section class="container mt-3">
-      <div class="card">
-        <div class="card-body">
-          <h2 class="card-title h3">
-            La Mesa 12/20/2020
-            <img
-              class="weather-icon"
-              src="http://openweathermap.org/img/wn/01n@2x.png"
-            />
-          </h2>
-          <p class="card-text">Temperature: 65&#176;</p>
-          <p class="card-text">Humidity: 23%</p>
-          <p class="card-text">Wind Speed: 1 MPH</p>
-          <p class="card-text">
-            UV Index: <span class="badge bg-info">3.0</span>
-          </p>
+            <div class="list-group">
+              <button
+                type="button"
+                class="list-group-item list-group-item-action"
+                aria-current="true"
+              >
+                La Mesa
+              </button>
+              <button
+                type="button"
+                class="list-group-item list-group-item-action"
+              >
+                South Lake Tahoe
+              </button>
+              <button
+                type="button"
+                class="list-group-item list-group-item-action"
+              >
+                Bishop
+              </button>
+              <button
+                type="button"
+                class="list-group-item list-group-item-action"
+              >
+                Las Vegas
+              </button>
+              <button
+                type="button"
+                class="list-group-item list-group-item-action"
+              >
+                Cedar City
+              </button>
+            </div>
+          </section>
         </div>
-      </div>
-    </section>
+        <div class="col-md co-x;-8">
+          <section class="mt-3">
+            <div class="card">
+              <div class="card-body">
+                <h2 class="card-title h3">
+                  La Mesa 12/20/2020
+                  <img
+                    class="weather-icon"
+                    src="http://openweathermap.org/img/wn/01n@2x.png"
+                  />
+                </h2>
+                <p class="card-text">Temperature: 65&#176;F</p>
+                <p class="card-text">Humidity: 23%</p>
+                <p class="card-text">Wind Speed: 1 MPH</p>
+                <p class="card-text">
+                  UV Index: <span class="badge bg-info">3.0</span>
+                </p>
+              </div>
+            </div>
+          </section>
 
-    <section class="container mt-3">
-      <h2 class="h4">5-Day Forecast:</h2>
-      <div class="card deck">
-        <div class="card text-white bg-primary forecast">
-          <div class="card-body">
-            <h5 class="card-title">12/21/2020</h5>
-            <div>
-              <img
-                class="weather-icon"
-                src="http://openweathermap.org/img/wn/01n@2x.png"
-              />
+          <section class="mt-3">
+            <h2 class="h4">5-Day Forecast:</h2>
+            <div class="row">
+              <div class="col-xl">
+                <div class="card text-white bg-primary forecast mt-4">
+                  <div class="card-body">
+                    <h5 class="card-title">12/21/2020</h5>
+                    <div>
+                      <img
+                        class="weather-icon"
+                        src="http://openweathermap.org/img/wn/01n@2x.png"
+                      />
+                    </div>
+                    <p class="card-text">
+                      Temperature: 65&#176;F
+                      <br />
+                      Humidity: 23%
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl">
+                <div class="card text-white bg-primary forecast mt-4">
+                  <div class="card-body">
+                    <h5 class="card-title">12/21/2020</h5>
+                    <div>
+                      <img
+                        class="weather-icon"
+                        src="http://openweathermap.org/img/wn/01n@2x.png"
+                      />
+                    </div>
+                    <p class="card-text">
+                      Temperature: 65&#176;F
+                      <br />
+                      Humidity: 23%
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl">
+                <div class="card text-white bg-primary forecast mt-4">
+                  <div class="card-body">
+                    <h5 class="card-title">12/21/2020</h5>
+                    <div>
+                      <img
+                        class="weather-icon"
+                        src="http://openweathermap.org/img/wn/01n@2x.png"
+                      />
+                    </div>
+                    <p class="card-text">
+                      Temperature: 65&#176;F
+                      <br />
+                      Humidity: 23%
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl">
+                <div class="card text-white bg-primary forecast mt-4">
+                  <div class="card-body">
+                    <h5 class="card-title">12/21/2020</h5>
+                    <div>
+                      <img
+                        class="weather-icon"
+                        src="http://openweathermap.org/img/wn/01n@2x.png"
+                      />
+                    </div>
+                    <p class="card-text">
+                      Temperature: 65&#176;F
+                      <br />
+                      Humidity: 23%
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl">
+                <div class="card text-white bg-primary forecast mt-4">
+                  <div class="card-body">
+                    <h5 class="card-title">12/21/2020</h5>
+                    <div>
+                      <img
+                        class="weather-icon"
+                        src="http://openweathermap.org/img/wn/01n@2x.png"
+                      />
+                    </div>
+                    <p class="card-text">
+                      Temperature: 65&#176;F
+                      <br />
+                      Humidity: 23%
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
-            <p class="card-text">
-              Temperature: 65&#176;
-              <br />
-              Humidity: 23%
-            </p>
-          </div>
-        </div>
-        <div class="card text-white bg-primary forecast">
-          <div class="card-body">
-            <h5 class="card-title">12/21/2020</h5>
-            <div>
-              <img
-                class="weather-icon"
-                src="http://openweathermap.org/img/wn/01n@2x.png"
-              />
-            </div>
-            <p class="card-text">
-              Temperature: 65&#176;
-              <br />
-              Humidity: 23%
-            </p>
-          </div>
-        </div>
-        <div class="card text-white bg-primary forecast">
-          <div class="card-body">
-            <h5 class="card-title">12/21/2020</h5>
-            <div>
-              <img
-                class="weather-icon"
-                src="http://openweathermap.org/img/wn/01n@2x.png"
-              />
-            </div>
-            <p class="card-text">
-              Temperature: 65&#176;
-              <br />
-              Humidity: 23%
-            </p>
-          </div>
-        </div>
-        <div class="card text-white bg-primary forecast">
-          <div class="card-body">
-            <h5 class="card-title">12/21/2020</h5>
-            <div>
-              <img
-                class="weather-icon"
-                src="http://openweathermap.org/img/wn/01n@2x.png"
-              />
-            </div>
-            <p class="card-text">
-              Temperature: 65&#176;
-              <br />
-              Humidity: 23%
-            </p>
-          </div>
-        </div>
-        <div class="card text-white bg-primary forecast">
-          <div class="card-body">
-            <h5 class="card-title">12/21/2020</h5>
-            <div>
-              <img
-                class="weather-icon"
-                src="http://openweathermap.org/img/wn/01n@2x.png"
-              />
-            </div>
-            <p class="card-text">
-              Temperature: 65&#176;
-              <br />
-              Humidity: 23%
-            </p>
-          </div>
+          </section>
         </div>
       </div>
-    </section>
+    </div>
 
     <pre id="current-weather-view"></pre>
     <script

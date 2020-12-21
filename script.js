@@ -101,6 +101,57 @@ function renderHistory(searchHistory) {
 
   $(".list-group").empty().append(newListGroup);
 }
+
+function renderCurrentWeatherCard() {
+  var title = $("<h2 class='card-title h3'>").text("La Mesa");
+  var weatherIcon = $("<img>").attr({
+    class: "weather-icon",
+    src: "http://openweathermap.org/img/wn/01n@2x.png",
+  });
+  title.append(weatherIcon);
+
+  var subtitle = $("<h3 class='card-subtitle mb-3 text-muted'>").text(
+    "12/20/2020"
+  );
+  var tempCardText = $("<p class='card-text'>").text("Temperature: 65 °F");
+  var humidityCardText = $("<p class='card-text'>").text("Humidity: 23%");
+  var windCardText = $("<p class='card-text'>").text("Wind Speed: 1 MPH");
+  var uvIndexCardText = $("<p class='card-text'>")
+    .text("UV Index: ")
+    .append(renderUVBadge(3.0));
+  var body = $("<div class='card-body'>").append(
+    title,
+    subtitle,
+    tempCardText,
+    humidityCardText,
+    windCardText,
+    uvIndexCardText
+  );
+  var card = $("<div class='card'>").append(body);
+  $("#current-weather").empty().append(card);
+}
+
+function renderUVBadge(uvIndex) {
+  var severity = uvSeverity(uvIndex);
+  return $("<span class='uv-index badge'>").addClass(severity).text(uvIndex);
+}
+
+function uvSeverity(uvIndex) {
+  if (uvIndex < 3) {
+    return "low";
+  }
+  if (uvIndex < 6) {
+    return "moderate";
+  }
+  if (uvIndex < 8) {
+    return "high";
+  }
+  if (uvIndex < 11) {
+    return "very-high";
+  }
+  return "extreme";
+}
+
 var searchHistory = [
   "La Mesa",
   "South Lake Tahoe",
@@ -109,7 +160,7 @@ var searchHistory = [
   "Cedar City",
 ];
 renderHistory(searchHistory);
-
+renderCurrentWeatherCard();
 // dumpUVdata();
 //dumpCurrentWeather();
 //dump5DayForecastData();

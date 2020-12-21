@@ -87,6 +87,29 @@ function getWeatherIconUrlFromId(iconId) {
   return "http://openweathermap.org/img/wn/" + iconId + "@2x.png";
 }
 
+function renderHistory(searchHistory) {
+  var newListGroup = $("<div>");
+  searchHistory.forEach(function (city) {
+    var button = $("<button>")
+      .attr({
+        type: "button",
+        class: "list-group-item list-group-item-action",
+      })
+      .text(city);
+    newListGroup.append(button);
+  });
+
+  $(".list-group").empty().append(newListGroup);
+}
+var searchHistory = [
+  "La Mesa",
+  "South Lake Tahoe",
+  "Bishop",
+  "Las Vegas",
+  "Cedar City",
+];
+renderHistory(searchHistory);
+
 // dumpUVdata();
 //dumpCurrentWeather();
 //dump5DayForecastData();

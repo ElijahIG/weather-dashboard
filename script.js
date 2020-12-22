@@ -3,9 +3,11 @@ var citySearch = "La Mesa";
 var apiKeyParam = "appid=b825dee8ade9ae135176720980ccb6bf";
 var unitsFormat = "units=imperial";
 
-function fetchCurrentWeather() {
+function fetchCurrentWeather(city) {
   var queryURL =
-    "https://api.openweathermap.org/data/2.5/weather?q=La Mesa&" +
+    "https://api.openweathermap.org/data/2.5/weather?q=" +
+    city +
+    "&" +
     unitsFormat +
     "&" +
     apiKeyParam;
@@ -23,12 +25,13 @@ function fetchCurrentWeather() {
       windMPH: response.wind.speed,
       location: response.coord,
     };
+    fetchUVData();
+    fetch5DayForecast(currentWeatherData.cityName);
     renderCurrentWeatherCard(currentWeatherData);
-    dumpUVdata();
   });
 }
 
-function fetchUVdata() {
+function fetchUVData() {
   var location = { lon: -117.02, lat: 32.77 };
   var queryURL =
     "http://api.openweathermap.org/data/2.5/uvi?lat=" +
@@ -46,7 +49,7 @@ function fetchUVdata() {
   });
 }
 
-function fetch5DayForecastData() {
+function fetch5DayForecast(citySearch) {
   var queryURL =
     "http://api.openweathermap.org/data/2.5/forecast?" +
     "q=" +
@@ -209,5 +212,11 @@ var searchHistory = [
   "Cedar City",
 ];
 renderHistory(searchHistory);
-fetchCurrentWeather();
-fetch5DayForecastData();
+
+$("#search-form").on("submit", function (event) {
+  event.preventDefault();
+
+  var city = $("#city-input").val().trim();
+  $("#city-input").val("");
+  fetchCurrentWeather(city);
+});

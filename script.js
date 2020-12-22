@@ -1,6 +1,11 @@
 var currentWeatherView = $("#current-weather-view");
 var apiKeyParam = "appid=b825dee8ade9ae135176720980ccb6bf";
 var unitsFormat = "units=imperial";
+var searchHistory = getSearchHistory();
+
+if (searchHistory.length > 0) {
+  fetchCurrentWeather(searchHistory[0]);
+}
 
 $("#search-form").on("submit", function (event) {
   event.preventDefault();
@@ -15,7 +20,11 @@ $("#search-form").on("submit", function (event) {
   fetchCurrentWeather(city);
 });
 
-renderSearchHistory(getSearchHistory());
+$("#search-history").on("click", "button", function () {
+  fetchCurrentWeather(this.textContent);
+});
+
+renderSearchHistory(searchHistory);
 
 function fetchCurrentWeather(city) {
   var queryURL =
@@ -229,11 +238,3 @@ function renderForecastCardColumn(forecast) {
   );
   return $("<div class='col-xl'>").append(card);
 }
-
-var searchHistory = [
-  "La Mesa",
-  "South Lake Tahoe",
-  "Bishop",
-  "Las Vegas",
-  "Cedar City",
-];

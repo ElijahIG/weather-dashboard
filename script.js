@@ -3,7 +3,7 @@ var citySearch = "La Mesa";
 var apiKeyParam = "appid=b825dee8ade9ae135176720980ccb6bf";
 var unitsFormat = "units=imperial";
 
-function dumpCurrentWeather() {
+function fetchCurrentWeather() {
   var queryURL =
     "https://api.openweathermap.org/data/2.5/weather?q=La Mesa&" +
     unitsFormat +
@@ -14,21 +14,21 @@ function dumpCurrentWeather() {
     url: queryURL,
     method: "GET",
   }).then(function (response) {
-    currentWeatherView.text(JSON.stringify(response, null, 2));
     var currentWeatherData = {
       cityName: response.name,
       unixTime: response.dt,
       iconUrl: getWeatherIconUrlFromId(response.weather[0].icon),
       temperature: response.main.temp,
       humidityPercent: response.main.humidity,
-      windSpeedMetersSec: response.wind.speed,
+      windMPH: response.wind.speed,
       location: response.coord,
     };
-    console.log(currentWeatherData);
+    renderCurrentWeatherCard(currentWeatherData);
+    dumpUVdata();
   });
 }
 
-function dumpUVdata() {
+function fetchUVdata() {
   var location = { lon: -117.02, lat: 32.77 };
   var queryURL =
     "http://api.openweathermap.org/data/2.5/uvi?lat=" +
@@ -42,17 +42,17 @@ function dumpUVdata() {
     url: queryURL,
     method: "GET",
   }).then(function (response) {
-    currentWeatherView.text(JSON.stringify(response, null, 2));
-    var uvIndex = response.value;
-    console.log("uvIndex: " + uvIndex);
+    renderUVBadge(response.value);
   });
 }
 
-function dump5DayForecastData() {
+function fetch5DayForecastData() {
   var queryURL =
     "http://api.openweathermap.org/data/2.5/forecast?" +
     "q=" +
     citySearch +
+    "&" +
+    unitsFormat +
     "&" +
     apiKeyParam;
 
@@ -79,7 +79,7 @@ function dump5DayForecastData() {
         fiveDayForecastData.push(forecastData);
       }
     });
-    console.log(fiveDayForecastData);
+    render5DayForecast(fiveDayForecastData);
   });
 }
 
@@ -102,20 +102,28 @@ function renderHistory(searchHistory) {
   $(".list-group").empty().append(newListGroup);
 }
 
-function renderCurrentWeatherCard() {
-  var title = $("<h2 class='card-title h3'>").text("La Mesa");
-  var weatherIcon = renderWeatherIcon();
+function renderCurrentWeatherCard(weatherData) {
+  console.log(weatherData);
+  var title = $("<h2 class='card-title h3'>").text(weatherData.cityName);
+  var weatherIcon = renderWeatherIcon(weatherData.iconUrl);
   title.append(weatherIcon);
 
   var subtitle = $("<h3 class='card-subtitle mb-3 text-muted'>").text(
-    "12/20/2020"
+    renderDateFromUnixSeconds(weatherData.unixTime)
   );
-  var tempCardText = $("<p class='card-text'>").text("Temperature: 65 °F");
-  var humidityCardText = $("<p class='card-text'>").text("Humidity: 23%");
-  var windCardText = $("<p class='card-text'>").text("Wind Speed: 1 MPH");
-  var uvIndexCardText = $("<p class='card-text'>")
-    .text("UV Index: ")
-    .append(renderUVBadge(3));
+  var tempCardText = $("<p class='card-text'>").text(
+    "Temperature: " + weatherData.temperature + " °F"
+  );
+  var humidityCardText = $("<p class='card-text'>").text(
+    "Humidity: " + weatherData.humidityPercent + "%"
+  );
+  var windCardText = $("<p class='card-text'>").text(
+    "Wind Speed: " + weatherData.windMPH + " MPH"
+  );
+  var uvIndexCardText = $("<p  id='uv-index' class='card-text'>").text(
+    "UV Index: "
+  );
+
   var body = $("<div class='card-body'>").append(
     title,
     subtitle,
@@ -128,16 +136,23 @@ function renderCurrentWeatherCard() {
   $("#current-weather").empty().append(card);
 }
 
-function renderWeatherIcon() {
+function renderWeatherIcon(src) {
   return $("<img>").attr({
     class: "weather-icon",
-    src: "http://openweathermap.org/img/wn/01n@2x.png",
+    src: src,
   });
+}
+
+function renderDateFromUnixSeconds(unixTime) {
+  return moment.unix(unixTime).format("M/D/Y");
 }
 
 function renderUVBadge(uvIndex) {
   var severity = uvSeverity(uvIndex);
-  return $("<span class='uv-index badge'>").addClass(severity).text(uvIndex);
+  var badge = $("<span class='uv-index badge'>")
+    .addClass(severity)
+    .text(uvIndex);
+  $("#uv-index".append(badge));
 }
 
 function uvSeverity(uvIndex) {
@@ -156,25 +171,28 @@ function uvSeverity(uvIndex) {
   return "extreme";
 }
 
-function render5DayForecast() {
+function render5DayForecast(forecastData) {
   var sectionHeading = $("<h2 class='h4'>5-Day Forecast:</h2>");
 
   var row = $("<div class='row'>");
 
-  for (var i = 0; i < 5; i++) {
-    row.append(renderForecastCardColumn());
-  }
+  forecastData.forEach(function (forecast) {
+    var forecastColumn = renderForecastCardColumn(forecast);
+    row.append(forecastColumn);
+  });
 
   $("#forecast-section").empty().append(sectionHeading, row);
 }
 
-function renderForecastCardColumn() {
-  var title = $("<h5 class='card-title'>").text("12/21/2020");
-  var weatherIcon = renderWeatherIcon();
+function renderForecastCardColumn(forecast) {
+  var title = $("<h5 class='card-title'>").text(
+    renderDateFromUnixSeconds(forecast.unixTime)
+  );
+  var weatherIcon = renderWeatherIcon(forecast.iconUrl);
   var cardText = $("<p class='card-text'>").append(
-    "Temperature: 65 °F",
+    "Temperature: " + forecast.temperature + " °F",
     "<br>",
-    "Humidity: 23%"
+    "Humidity: " + forecast.humidityPercent + "%"
   );
   var body = $("<div class='card-body'>").append(title, weatherIcon, cardText);
   var card = $("<div class='card text-white bg-primary forecast mt-4'>").append(
@@ -191,8 +209,5 @@ var searchHistory = [
   "Cedar City",
 ];
 renderHistory(searchHistory);
-renderCurrentWeatherCard();
-render5DayForecast();
-// dumpUVdata();
-//dumpCurrentWeather();
-//dump5DayForecastData();
+fetchCurrentWeather();
+fetch5DayForecastData();

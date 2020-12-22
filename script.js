@@ -104,10 +104,7 @@ function renderHistory(searchHistory) {
 
 function renderCurrentWeatherCard() {
   var title = $("<h2 class='card-title h3'>").text("La Mesa");
-  var weatherIcon = $("<img>").attr({
-    class: "weather-icon",
-    src: "http://openweathermap.org/img/wn/01n@2x.png",
-  });
+  var weatherIcon = renderWeatherIcon();
   title.append(weatherIcon);
 
   var subtitle = $("<h3 class='card-subtitle mb-3 text-muted'>").text(
@@ -118,7 +115,7 @@ function renderCurrentWeatherCard() {
   var windCardText = $("<p class='card-text'>").text("Wind Speed: 1 MPH");
   var uvIndexCardText = $("<p class='card-text'>")
     .text("UV Index: ")
-    .append(renderUVBadge(3.0));
+    .append(renderUVBadge(3));
   var body = $("<div class='card-body'>").append(
     title,
     subtitle,
@@ -129,6 +126,13 @@ function renderCurrentWeatherCard() {
   );
   var card = $("<div class='card'>").append(body);
   $("#current-weather").empty().append(card);
+}
+
+function renderWeatherIcon() {
+  return $("<img>").attr({
+    class: "weather-icon",
+    src: "http://openweathermap.org/img/wn/01n@2x.png",
+  });
 }
 
 function renderUVBadge(uvIndex) {
@@ -152,6 +156,33 @@ function uvSeverity(uvIndex) {
   return "extreme";
 }
 
+function render5DayForecast() {
+  var sectionHeading = $("<h2 class='h4'>5-Day Forecast:</h2>");
+
+  var row = $("<div class='row'>");
+
+  for (var i = 0; i < 5; i++) {
+    row.append(renderForecastCardColumn());
+  }
+
+  $("#forecast-section").empty().append(sectionHeading, row);
+}
+
+function renderForecastCardColumn() {
+  var title = $("<h5 class='card-title'>").text("12/21/2020");
+  var weatherIcon = renderWeatherIcon();
+  var cardText = $("<p class='card-text'>").append(
+    "Temperature: 65 °F",
+    "<br>",
+    "Humidity: 23%"
+  );
+  var body = $("<div class='card-body'>").append(title, weatherIcon, cardText);
+  var card = $("<div class='card text-white bg-primary forecast mt-4'>").append(
+    body
+  );
+  return $("<div class='col-xl'>").append(card);
+}
+
 var searchHistory = [
   "La Mesa",
   "South Lake Tahoe",
@@ -161,6 +192,7 @@ var searchHistory = [
 ];
 renderHistory(searchHistory);
 renderCurrentWeatherCard();
+render5DayForecast();
 // dumpUVdata();
 //dumpCurrentWeather();
 //dump5DayForecastData();

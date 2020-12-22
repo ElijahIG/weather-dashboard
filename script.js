@@ -57,7 +57,7 @@ function fetchCurrentWeather(city) {
 function fetchUVData() {
   var location = { lon: -117.02, lat: 32.77 };
   var queryURL =
-    "http://api.openweathermap.org/data/2.5/uvi?lat=" +
+    "https://api.openweathermap.org/data/2.5/uvi?lat=" +
     location.lat +
     "&lon=" +
     location.lon +
@@ -74,7 +74,7 @@ function fetchUVData() {
 
 function fetch5DayForecast(citySearch) {
   var queryURL =
-    "http://api.openweathermap.org/data/2.5/forecast?" +
+    "https://api.openweathermap.org/data/2.5/forecast?" +
     "q=" +
     citySearch +
     "&" +
@@ -110,7 +110,7 @@ function fetch5DayForecast(citySearch) {
 }
 
 function getWeatherIconUrlFromId(iconId) {
-  return "http://openweathermap.org/img/wn/" + iconId + "@2x.png";
+  return "https://openweathermap.org/img/wn/" + iconId + "@2x.png";
 }
 
 function getSearchHistory() {

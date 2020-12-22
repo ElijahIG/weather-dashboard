@@ -9,3 +9,5 @@ User will be presented with the current date, temp, humidity, wind speed, and uv
 User will also be shown the Forecast for the following five days
 
 https://elijahig.github.io/weather-dashboard/
+
+![Weather-Dashboard](images/Capture.PNG)

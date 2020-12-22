@@ -1,7 +1,21 @@
 var currentWeatherView = $("#current-weather-view");
-var citySearch = "La Mesa";
 var apiKeyParam = "appid=b825dee8ade9ae135176720980ccb6bf";
 var unitsFormat = "units=imperial";
+
+$("#search-form").on("submit", function (event) {
+  event.preventDefault();
+
+  var city = $("#city-input").val().trim();
+  $("#city-input").val("");
+
+  var searchHistory = getSearchHistory();
+  searchHistory.unshift(city);
+  saveSearchHistory(searchHistory);
+  renderSearchHistory(searchHistory);
+  fetchCurrentWeather(city);
+});
+
+renderSearchHistory(getSearchHistory());
 
 function fetchCurrentWeather(city) {
   var queryURL =
@@ -90,7 +104,19 @@ function getWeatherIconUrlFromId(iconId) {
   return "http://openweathermap.org/img/wn/" + iconId + "@2x.png";
 }
 
-function renderHistory(searchHistory) {
+function getSearchHistory() {
+  var searchHistory = JSON.parse(localStorage.getItem("search-history"));
+  if (searchHistory === null) {
+    return [];
+  }
+  return searchHistory;
+}
+
+function saveSearchHistory(searchHistory) {
+  localStorage.setItem("search-history", JSON.stringify(searchHistory));
+}
+
+function renderSearchHistory(searchHistory) {
   var newListGroup = $("<div>");
   searchHistory.forEach(function (city) {
     var button = $("<button>")
@@ -211,12 +237,3 @@ var searchHistory = [
   "Las Vegas",
   "Cedar City",
 ];
-renderHistory(searchHistory);
-
-$("#search-form").on("submit", function (event) {
-  event.preventDefault();
-
-  var city = $("#city-input").val().trim();
-  $("#city-input").val("");
-  fetchCurrentWeather(city);
-});
